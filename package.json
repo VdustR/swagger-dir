@@ -1,0 +1,51 @@
+{
+  "private": true,
+  "scripts": {
+    "postinstall": "lerna bootstrap && npx husky",
+    "dev:backend": "nodemon -e js,mjs,json,pug packages/core/dev.js",
+    "dev:frontend": "node packages/core/dev.js",
+    "commit": "git-cz",
+    "pub": "lerna publish --conventional-commits"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@prettier/plugin-pug": "^1.1.9",
+    "commitizen": "^4.0.3",
+    "husky": "^3.1.0",
+    "lerna": "^3.19.0",
+    "lint-staged": "^9.5.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.42.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,html,htm,vue,css,less,scss,md,mdx,yaml,yml,pug}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,jsx}": "eslint"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "packages/core/.cache",
+      "packages/core/js"
+    ]
+  }
+}

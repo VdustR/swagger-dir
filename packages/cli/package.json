@@ -1,0 +1,32 @@
+{
+  "name": "swagger-dir",
+  "version": "0.0.0",
+  "description": "A Swagger.io Directory Browser",
+  "keywords": [
+    "swagger",
+    "swagger.io",
+    "api",
+    "cli"
+  ],
+  "homepage": "https://github.com/VdustR/swagger-dir/tree/master/packages/cli",
+  "bugs": {
+    "url": "https://github.com/VdustR/swagger-dir/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "ViPro",
+    "email": "VdustR@gmail.com",
+    "url": "https://VdustR.github.io"
+  },
+  "bin": {
+    "swagger-dir": "./bin/swagger-dir.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VdustR/swagger-dir.git"
+  },
+  "dependencies": {
+    "@swagger-dir/core": "0.0.0",
+    "commander": "^5.0.0"
+  }
+}
