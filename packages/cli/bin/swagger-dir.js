@@ -10,6 +10,7 @@ program
   .version(pkg.version)
   .description(pkg.description)
   .option('-d, --dir <dir>', 'Swagger files directory')
+  .option('-m, --mode <mode>', 'Default: production')
   .option(
     '-s, --swagger-ui-options <swaggerUiOptions>',
     'a JSON format swagger UI options'
@@ -24,6 +25,7 @@ program
   .parse(process.argv);
 
 swaggerDir(program.dir || cwd, {
+  ...(!program.mode ? null : { mode: program.mode }),
   ...(!program.swaggerUiOptions
     ? null
     : { swaggerUiOptions: JSON.parse(program.swaggerUiOptions) }),

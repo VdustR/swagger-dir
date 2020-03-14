@@ -46,7 +46,7 @@ const webpackConfig = ({ mode, publicUrl, jsDir }) => ({
           options: {
             presets: [
               [
-                '@emotion/babel-preset-css-prop',
+                require.resolve('@emotion/babel-preset-css-prop'),
                 {
                   autoLabel: true,
                   labelFormat: '[local]',
@@ -65,18 +65,6 @@ const webpackConfig = ({ mode, publicUrl, jsDir }) => ({
   ],
 });
 
-// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-function genId(length) {
-  var result = '';
-  var characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
-
 const swaggerDir = (
   dir = '',
   {
@@ -89,9 +77,6 @@ const swaggerDir = (
   } = {}
 ) => {
   dir = resolve(process.cwd(), dir);
-  const id = genId(8);
-  const jsDir = join(tmpdir(), 'swagger-dir', id, 'js');
-  console.log(jsDir);
   const app = express();
   app.use(helmet());
   const getDateStr = () => format(new Date(), dateFormat);
@@ -111,6 +96,9 @@ const swaggerDir = (
     logLevel > LOG_ERROR
       ? Function.prototype
       : (...args) => console.error(getDateStr(), '[error]', ...args);
+  const id = String(new Date().valueOf());
+  const jsDir = join(tmpdir(), 'swagger-dir', id, 'js');
+  logDebug(`jsDir: ${jsDir}`);
   logDebug('Starting swagger-dir...', `mode: ${inspect(mode)}`);
   const renderDir = pug.compileFile(resolve(__dirname, 'view/dir.pug'));
   const renderSwaggerUi = pug.compileFile(
