@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/VdustR/swagger-dir/compare/v0.1.3...v0.1.4) (2020-03-14)
+
+### Bug Fixes
+
+- redirects ([0c0c5a0](https://github.com/VdustR/swagger-dir/commit/0c0c5a062edd3423d30a43f89d31487df3c6c36a))
+
 ## [0.1.3](https://github.com/VdustR/swagger-dir/compare/v0.1.2...v0.1.3) (2020-03-14)
 
 **Note:** Version bump only for package @swagger-dir/core
