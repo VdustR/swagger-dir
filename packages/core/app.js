@@ -1,3 +1,4 @@
+const { tmpdir } = require('os');
 const { dirname, join, relative, resolve } = require('path');
 const { inspect } = require('util');
 const format = require('date-fns/format');
@@ -14,11 +15,10 @@ const LOG_WARN = 2;
 const LOG_ERROR = 3;
 // const LOG_NONE = 4;
 
-const jsDir = resolve(__dirname, '.cache/js');
 const jsSrcDir = resolve(__dirname, 'js');
 const swaggerFilesSortMethod = (a, b) => a.localeCompare(b);
 
-const webpackConfig = ({ mode, publicUrl }) => ({
+const webpackConfig = ({ mode, publicUrl, jsDir }) => ({
   mode,
   bail: mode === 'production',
   devtool: mode === 'production' ? 'source-map' : 'cheap-module-source-map',
@@ -65,6 +65,18 @@ const webpackConfig = ({ mode, publicUrl }) => ({
   ],
 });
 
+// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+function genId(length) {
+  var result = '';
+  var characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 const swaggerDir = (
   dir = '',
   {
@@ -77,6 +89,9 @@ const swaggerDir = (
   } = {}
 ) => {
   dir = resolve(process.cwd(), dir);
+  const id = genId(8);
+  const jsDir = join(tmpdir(), 'swagger-dir', id, 'js');
+  console.log(jsDir);
   const app = express();
   app.use(helmet());
   const getDateStr = () => format(new Date(), dateFormat);
@@ -145,7 +160,7 @@ const swaggerDir = (
     )
     .on('ready', () => logDebug('[watch]', `${dir} initialed!`));
   // build js
-  const compiler = webpack(webpackConfig({ mode, publicUrl }));
+  const compiler = webpack(webpackConfig({ mode, publicUrl, jsDir }));
   if (mode === 'development') {
     compiler.watch(
       {

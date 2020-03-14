@@ -28,5 +28,8 @@
   "dependencies": {
     "@swagger-dir/core": "^0.1.0",
     "commander": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -2,6 +2,15 @@
 
 > A Swagger.io Directory Browser
 
+## Install
+
+```sh
+npm i -g swagger-dir
+yarn global add swagger-dir
+```
+
+## Usage
+
 ```
 Usage: swagger-dir [options]
 
