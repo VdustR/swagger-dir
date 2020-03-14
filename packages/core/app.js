@@ -181,8 +181,14 @@ const swaggerDir = (
     });
   }
 
+  if (publicUrl !== '/') {
+    app.get('/', function(req, res) {
+      res.redirect(publicUrl);
+    });
+  }
+
   app.get(publicUrl, function(req, res) {
-    res.send('Hello World');
+    res.redirect(join(publicUrl, 'dir'));
   });
 
   app.get(join(publicUrl, 'swagger-ui/'), function(req, res) {
