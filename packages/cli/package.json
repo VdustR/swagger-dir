@@ -1,6 +1,6 @@
 {
   "name": "swagger-dir",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A Swagger.io Directory Browser",
   "keywords": [
     "swagger",
@@ -26,7 +26,7 @@
     "url": "https://github.com/VdustR/swagger-dir.git"
   },
   "dependencies": {
-    "@swagger-dir/core": "0.0.0",
+    "@swagger-dir/core": "^0.1.0",
     "commander": "^5.0.0"
   }
 }
