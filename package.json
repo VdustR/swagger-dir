@@ -1,11 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "lerna bootstrap && npx husky",
+    "postinstall": "lerna bootstrap",
     "dev:backend": "nodemon -e js,mjs,json,pug packages/core/dev.js",
     "dev:frontend": "node packages/core/dev.js",
     "commit": "git-cz",
     "pub": "lerna publish --conventional-commits"
+  },
+  "dependencies": {
+    "lerna": "^3.19.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
@@ -14,7 +17,6 @@
     "@prettier/plugin-pug": "^1.1.9",
     "commitizen": "^4.0.3",
     "husky": "^3.1.0",
-    "lerna": "^3.19.0",
     "lint-staged": "^9.5.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",

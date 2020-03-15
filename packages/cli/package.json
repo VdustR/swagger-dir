@@ -19,7 +19,7 @@
     "url": "https://VdustR.github.io"
   },
   "bin": {
-    "swagger-dir": "./bin/swagger-dir.js"
+    "swagger-dir": "./bin/swagger-dir"
   },
   "repository": {
     "type": "git",

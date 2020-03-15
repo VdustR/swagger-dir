@@ -2,6 +2,8 @@
 
 > A Swagger.io Directory Browser
 
+[More info](../../README.md)
+
 ## Install
 
 ```js

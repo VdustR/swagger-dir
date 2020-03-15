@@ -1,6 +1,8 @@
-# swagger-dir
+# swagger-dir CLI
 
 > A Swagger.io Directory Browser
+
+[More info](../../README.md)
 
 ## Install
 
@@ -30,6 +32,30 @@ Options:
 For example:
 
 ```sh
+# browse current directory
 swagger-dir
+# browse specific directory
 swagger-dir /path/to/my/swagger/files/folder
+# you can also use npx to execute it without installing it
+npx swagger-dir
+```
+
+## Docker
+
+```sh
+docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 swagger-dir:latest
+```
+
+You have to pass environment variable `CHOKIDAR_USEPOLLING` to make files update for mac:
+
+```sh
+docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 -e CHOKIDAR_USEPOLLING=true swagger-dir:latest
+```
+
+Check [chokidar#performance](https://github.com/paulmillr/chokidar#performance) for more information.
+
+### Build Locally
+
+```sh
+docker build -t 'swagger-dir:latest' .
 ```

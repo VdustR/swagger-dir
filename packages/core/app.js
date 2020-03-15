@@ -15,6 +15,8 @@ const LOG_WARN = 2;
 const LOG_ERROR = 3;
 // const LOG_NONE = 4;
 
+const swaggerFileRegex = /\.(json|yaml|yml)$/;
+
 const jsSrcDir = resolve(__dirname, 'js');
 const swaggerFilesSortMethod = (a, b) => a.localeCompare(b);
 
@@ -109,13 +111,13 @@ const swaggerDir = (
 
   const watchFileActions = {
     add: path => {
-      if (!path.match(/\.(json|yaml|yml)$/)) return;
-      else if (swaggerFiles.includes(path)) {
+      if (!path.match(swaggerFileRegex)) return;
+      if (swaggerFiles.includes(path)) {
         logWarn('[watch]', `path ${inspect(path)} exists.`);
         return;
-      } else {
-        swaggerFiles = [...swaggerFiles, path].sort(swaggerFilesSortMethod);
       }
+      swaggerFiles = [...swaggerFiles, path].sort(swaggerFilesSortMethod);
+
       logDebug(
         '[watch]',
         `${path} added!`,
@@ -123,6 +125,7 @@ const swaggerDir = (
       );
     },
     unlink: path => {
+      if (!path.match(swaggerFileRegex)) return;
       if (!swaggerFiles.includes(path)) {
         logWarn('[watch]', `path ${inspect(path)} doesn't exist.`);
         return;
