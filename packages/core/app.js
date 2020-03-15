@@ -101,7 +101,7 @@ const swaggerDir = (
   const id = String(new Date().valueOf());
   const jsDir = join(tmpdir(), 'swagger-dir', id, 'js');
   logDebug(`jsDir: ${jsDir}`);
-  logDebug('Starting swagger-dir...', `mode: ${inspect(mode)}`);
+  logDebug('init swagger-dir...', `mode: ${inspect(mode)}`);
   const renderDir = pug.compileFile(resolve(__dirname, 'view/dir.pug'));
   const renderSwaggerUi = pug.compileFile(
     resolve(__dirname, 'view/swagger-ui.pug')
@@ -138,43 +138,67 @@ const swaggerDir = (
       );
     },
   };
-  chokidar
-    .watch(dir.concat('/**'))
-    .on('all', (event, path) => {
-      const relativePath = relative(dir, path);
-      logDebug('[watch]', `[${event}]`, relativePath);
-      if (typeof watchFileActions[event] === 'function')
-        watchFileActions[event](relativePath);
-    })
-    .on('error', error =>
-      logError('[watch]', `watcher error: ${inspect(error)}`)
-    )
-    .on('ready', () => logDebug('[watch]', `${dir} initialed!`));
-  // build js
-  const compiler = webpack(webpackConfig({ mode, publicUrl, jsDir }));
-  if (mode === 'development') {
-    compiler.watch(
-      {
-        aggregateTimeout: 300,
-        poll: undefined,
-      },
-      (err, stats) => {
-        if (err) {
-          logError('[buildJs]', `got error: ${inspect(err)}`);
-          return;
-        }
-        logInfo('[buildJs]', 'built successfully!');
-      }
+  const swaggerFileWatcher = chokidar.watch(dir.concat('/**'));
+  const startSwaggerFileWatcher = () =>
+    new Promise(resolve =>
+      swaggerFileWatcher
+        .on('all', (event, path) => {
+          const relativePath = relative(dir, path);
+          logDebug('[watch]', `[${event}]`, relativePath);
+          if (typeof watchFileActions[event] === 'function')
+            watchFileActions[event](relativePath);
+        })
+        .on('error', error =>
+          logError('[watch]', `watcher error: ${inspect(error)}`)
+        )
+        .on('ready', () => {
+          logDebug('[watch]', `${dir} initialed!`);
+          resolve();
+        })
     );
-  } else {
-    compiler.run((err, stats) => {
-      if (err) {
-        logError('[buildJs]', `got error: ${inspect(err)}`);
-        return;
-      }
-      logInfo('[buildJs]', 'built successfully!');
-    });
-  }
+  const closeSwaggerFileWatcher = async () => {
+    logDebug('[watch]', 'stopping...');
+    await swaggerFileWatcher.close();
+    logDebug('[watch]', 'stopped!');
+  };
+  const startBuildJs = () => {
+    logInfo('[buildJs]', 'init...');
+    const compiler = webpack(webpackConfig({ mode, publicUrl, jsDir }));
+    if (mode === 'development') {
+      let resolved = false;
+      return new Promise(resolve =>
+        compiler.watch(
+          {
+            aggregateTimeout: 300,
+            poll: undefined,
+          },
+          (err, stats) => {
+            if (err) {
+              logError('[buildJs]', `got error: ${inspect(err)}`);
+              return;
+            }
+            logInfo('[buildJs]', 'built successfully!');
+            if (!resolved) {
+              resolved = true;
+              resolve();
+            }
+          }
+        )
+      );
+    } else {
+      return new Promise((resolve, reject) =>
+        compiler.run((err, stats) => {
+          if (err) {
+            logError('[buildJs]', `got error: ${inspect(err)}`);
+            reject();
+            return;
+          }
+          logInfo('[buildJs]', 'built successfully!');
+          resolve();
+        })
+      );
+    }
+  };
 
   if (logLevel <= LOG_DEBUG) {
     // access log
@@ -248,8 +272,28 @@ const swaggerDir = (
 
   app.get('/*', (req, res) => res.status(404).send('Not Found'));
 
-  app.listen(port);
-  logInfo(`swagger-dir is listening on port: ${port}`);
+  let server = null;
+  let closing = false;
+  (async () => {
+    try {
+      logDebug(`[start] init...`);
+      await Promise.all([startSwaggerFileWatcher(), startBuildJs()]);
+      if (closing) return;
+      logDebug(`[start] started!`);
+      server = app.listen(port);
+      logInfo(`swagger-dir is listening on port: ${port}`);
+    } catch (e) {
+      logError(`[start] got error: ${inspect(e)}`);
+    }
+  })();
+  const close = async () => {
+    logDebug('[close] all closing...');
+    closing = true;
+    await Promise.all([closeSwaggerFileWatcher()]);
+    if (server) server.close();
+    logDebug('[close] all closed!');
+  };
+  return close;
 };
 
 module.exports = swaggerDir;

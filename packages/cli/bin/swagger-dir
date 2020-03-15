@@ -6,6 +6,8 @@ const pkg = require('../package.json');
 
 const cwd = process.cwd();
 
+const forceClose = () => process.exit(1);
+
 program
   .version(pkg.version)
   .description(pkg.description)
@@ -24,7 +26,7 @@ program
   .option('-f, --date-format <dateFormat>', 'Default: yyyy/MM/dd HH:mm:ss')
   .parse(process.argv);
 
-swaggerDir(program.dir || cwd, {
+const close = swaggerDir(program.dir || cwd, {
   ...(!program.mode ? null : { mode: program.mode }),
   ...(!program.swaggerUiOptions
     ? null
@@ -33,4 +35,13 @@ swaggerDir(program.dir || cwd, {
   ...(!program.port ? null : { port: program.port }),
   ...(!program.logLevel ? null : { logLevel: program.logLevel }),
   ...(!program.dateFormat ? null : { dateFormat: program.dateFormat }),
+});
+
+process.on('SIGINT', () => {
+  process.on('SIGINT', forceClose);
+  close().then(forceClose);
+  setTimeout(() => {
+    console.log('swagger-dir close timeout!');
+    forceClose();
+  }, 10000);
 });
