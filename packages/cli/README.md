@@ -42,8 +42,16 @@ npx swagger-dir
 
 ## Docker
 
+Pull the image:
+
 ```sh
-docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 swagger-dir:latest
+docker pull vdustr/swagger-dir
+```
+
+Run the container:
+
+```sh
+docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 vdustr/swagger-dir:latest
 ```
 
 You have to pass environment variable `CHOKIDAR_USEPOLLING` to make files update for mac:
