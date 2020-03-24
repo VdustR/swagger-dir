@@ -246,7 +246,10 @@ const swaggerDir = (
 
   const servedLibraries = ['victormono'];
   servedLibraries.forEach(lib =>
-    app.get(join(publicUrl, 'lib', lib), express.static(require.resolve(lib)))
+    app.use(
+      join(publicUrl, 'lib', lib),
+      express.static(dirname(require.resolve(join(lib, 'package.json'))))
+    )
   );
 
   app.get(join(publicUrl, 'dir(/*)?'), function(req, res) {

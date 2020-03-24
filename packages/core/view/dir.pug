@@ -14,7 +14,11 @@ head
     href=`${publicUrl}favicon-16x16.png`,
     sizes='16x16'
   )
-  link(href=`${public}/lib/victormono/dist/index.css`)
+  link(
+    rel='stylesheet',
+    type='text/css',
+    href=`${publicUrl}lib/victormono/dist/index.css`
+  )
   script.
     const baseDir = #{baseDir};
     const files = #{files};
