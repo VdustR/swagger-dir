@@ -30,6 +30,7 @@ swaggerDir('/my/swagger', { port: 5000 });
 const options = {
   mode = 'production',
   publicUrl = '/',
+  servicePublicUrl = '/',
   port = 3000,
   logLevel = LOG_INFO,
   dateFormat = 'yyyy/MM/dd HH:mm:ss',

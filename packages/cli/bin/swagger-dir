@@ -18,6 +18,7 @@ program
     'a JSON format swagger UI options'
   )
   .option('-u, --public-url <publicUrl>', 'Default: /')
+  .option('-r, --server-public-url <serverPublicUrl>', 'Default: /')
   .option('-p, --port <port>', 'Default: 3000')
   .option(
     '-l, --log-level <logLevel>',
@@ -32,6 +33,9 @@ const close = swaggerDir(program.dir || cwd, {
     ? null
     : { swaggerUiOptions: JSON.parse(program.swaggerUiOptions) }),
   ...(!program.publicUrl ? null : { publicUrl: program.publicUrl }),
+  ...(!program.serverPublicUrl
+    ? null
+    : { serverPublicUrl: program.serverPublicUrl }),
   ...(!program.port ? null : { port: program.port }),
   ...(!program.logLevel ? null : { logLevel: program.logLevel }),
   ...(!program.dateFormat ? null : { dateFormat: program.dateFormat }),

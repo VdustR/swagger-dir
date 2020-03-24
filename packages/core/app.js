@@ -72,6 +72,7 @@ const swaggerDir = (
   {
     mode = 'production',
     publicUrl = '/',
+    serverPublicUrl = '/',
     port = 3000,
     logLevel = LOG_INFO,
     dateFormat = 'yyyy/MM/dd HH:mm:ss',
@@ -102,7 +103,15 @@ const swaggerDir = (
     `start swagger-dir:`,
     dir,
     `, options:`,
-    inspect({ mode, publicUrl, port, logLevel, dateFormat, swaggerUiOptions })
+    inspect({
+      mode,
+      publicUrl,
+      serverPublicUrl,
+      port,
+      logLevel,
+      dateFormat,
+      swaggerUiOptions,
+    })
   );
   const id = String(new Date().valueOf());
   const jsDir = join(tmpdir(), 'swagger-dir', id, 'js');
@@ -214,31 +223,31 @@ const swaggerDir = (
     });
   }
 
-  if (publicUrl !== '/') {
+  if (serverPublicUrl !== '/') {
     app.get('/', function(req, res) {
-      res.redirect(publicUrl);
+      res.redirect(serverPublicUrl);
     });
   }
 
-  app.get(publicUrl, function(req, res) {
+  app.get(serverPublicUrl, function(req, res) {
     res.redirect(join(publicUrl, 'dir'));
   });
 
-  app.get(join(publicUrl, 'swagger-ui/'), function(req, res) {
+  app.get(join(serverPublicUrl, 'swagger-ui/'), function(req, res) {
     res.send(swaggerUi);
   });
 
-  app.use(join(publicUrl, 'swagger-ui'), express.static(pathToSwaggerUi));
-  app.use(join(publicUrl, 'data'), express.static(dir));
-  app.use(join(publicUrl, 'js'), express.static(jsDir));
+  app.use(join(serverPublicUrl, 'swagger-ui'), express.static(pathToSwaggerUi));
+  app.use(join(serverPublicUrl, 'data'), express.static(dir));
+  app.use(join(serverPublicUrl, 'js'), express.static(jsDir));
 
   // favicon
-  app.use(join(publicUrl, 'favicon-16x16.png'), (req, res) =>
+  app.use(join(serverPublicUrl, 'favicon-16x16.png'), (req, res) =>
     res.sendFile(
       join(dirname(require.resolve('swagger-ui-dist')), 'favicon-16x16.png')
     )
   );
-  app.use(join(publicUrl, 'favicon-32x32.png'), (req, res) =>
+  app.use(join(serverPublicUrl, 'favicon-32x32.png'), (req, res) =>
     res.sendFile(
       join(dirname(require.resolve('swagger-ui-dist')), 'favicon-32x32.png')
     )
@@ -247,12 +256,12 @@ const swaggerDir = (
   const servedLibraries = ['victormono'];
   servedLibraries.forEach(lib =>
     app.use(
-      join(publicUrl, 'lib', lib),
+      join(serverPublicUrl, 'lib', lib),
       express.static(dirname(require.resolve(join(lib, 'package.json'))))
     )
   );
 
-  app.get(join(publicUrl, 'dir(/*)?'), function(req, res) {
+  app.get(join(serverPublicUrl, 'dir(/*)?'), function(req, res) {
     // remove tailing `/`
     if (req.originalUrl.substr(-1) === '/') {
       res.redirect(req.originalUrl.substr(0, req.originalUrl.length - 1));
