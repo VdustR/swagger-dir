@@ -9,7 +9,7 @@ services:
     links:
       - swagger-dir
   swagger-dir:
-    image: swagger-dir:latest
+    image: vdustr/swagger-dir:latest
     environment:
       - CHOKIDAR_USEPOLLING=true
     volumes:

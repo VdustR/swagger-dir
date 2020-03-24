@@ -56,16 +56,18 @@ Run the container:
 docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 vdustr/swagger-dir:latest
 ```
 
-You have to pass environment variable `CHOKIDAR_USEPOLLING` to make files update for mac:
+If the file updated events were not detected, please pass the environment variable `CHOKIDAR_USEPOLLING=true`:
 
 ```sh
-docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 -e CHOKIDAR_USEPOLLING=true swagger-dir:latest
+docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:3000 -e CHOKIDAR_USEPOLLING=true vdustr/swagger-dir:latest
 ```
 
 Check [chokidar#performance](https://github.com/paulmillr/chokidar#performance) for more information.
 
+If there is a gateway with subURL, use `publicUrl` for prefix of the links. If the URL is bypassed(without rewrite) at the reverse proxy, you might need `serverPublicUrl` to serve with the `/subURL/`. Take a look at the docker-compose examples of [publicUrl](../../examples/publicUrl) and [serverPublicUrl](../../examples/serverPublicUrl).
+
 ### Build Locally
 
 ```sh
-docker build -t 'swagger-dir:latest' .
+docker build -t "vdustr/swagger-dir:latest" .
 ```
