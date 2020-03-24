@@ -265,7 +265,9 @@ const swaggerDir = (
       renderDir({
         publicUrl,
         baseDir: inspect(baseDir),
-        files: inspect(filteredFiles),
+        files: inspect(filteredFiles, {
+          maxArrayLength: Infinity,
+        }),
       })
     );
   });
