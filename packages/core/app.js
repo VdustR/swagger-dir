@@ -98,6 +98,12 @@ const swaggerDir = (
     logLevel > LOG_ERROR
       ? Function.prototype
       : (...args) => console.error(getDateStr(), '[error]', ...args);
+  logDebug(
+    `start swagger-dir:`,
+    dir,
+    `, options:`,
+    inspect({ mode, publicUrl, port, logLevel, dateFormat, swaggerUiOptions })
+  );
   const id = String(new Date().valueOf());
   const jsDir = join(tmpdir(), 'swagger-dir', id, 'js');
   logDebug(`jsDir: ${jsDir}`);
