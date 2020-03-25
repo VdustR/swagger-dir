@@ -1,6 +1,6 @@
 {
   "name": "@swagger-dir/core",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "A Swagger.io Directory Browser",
   "keywords": [
     "swagger",
