@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/VdustR/swagger-dir/compare/v0.2.2...v1.0.0) (2020-03-25)
+
+
+### Code Refactoring
+
+* class and express middleware ([06917fe](https://github.com/VdustR/swagger-dir/commit/06917fefbb0403a51b90e55e4fb11a0bb7ae4866)), closes [#1](https://github.com/VdustR/swagger-dir/issues/1)
+
+
+### BREAKING CHANGES
+
+* remove client public url by migrating to hash router
+
+
+
+
+
 ## [0.2.2](https://github.com/VdustR/swagger-dir/compare/v0.2.1...v0.2.2) (2020-03-25)
 
 
