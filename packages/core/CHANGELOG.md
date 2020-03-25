@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/VdustR/swagger-dir/compare/v0.2.1...v0.2.2) (2020-03-25)
+
+### Bug Fixes
+
+- better debug ([d2946dd](https://github.com/VdustR/swagger-dir/commit/d2946dde5e8e833faa9bc998ed9b1d14ba355bb2))
+
 # [0.2.0](https://github.com/VdustR/swagger-dir/compare/v0.1.6...v0.2.0) (2020-03-24)
 
 ### Bug Fixes

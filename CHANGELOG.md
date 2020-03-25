@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/VdustR/swagger-dir/compare/v0.2.1...v0.2.2) (2020-03-25)
+
+
+### Bug Fixes
+
+* better debug ([d2946dd](https://github.com/VdustR/swagger-dir/commit/d2946dde5e8e833faa9bc998ed9b1d14ba355bb2))
+* mv serverPublicUrl ([23fc0b9](https://github.com/VdustR/swagger-dir/commit/23fc0b9efe9c85a3b6dcf57f2a674d1d169a32bc))
+
+
+
+
+
 ## [0.2.1](https://github.com/VdustR/swagger-dir/compare/v0.2.0...v0.2.1) (2020-03-24)
 
 **Note:** Version bump only for package swagger-dir
