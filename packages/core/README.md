@@ -15,13 +15,21 @@ yarn add @swagger-dir/core
 ## Usage
 
 ```js
-const swaggerDir = require('@swagger-dir/core');
+const app = express();
+const SwaggerDir = require('@swagger-dir/core');
+const swaggerDir = new SwaggerDir(dir, options);
+swaggerDir.start();
 
-swaggerDir(path, options);
+app.use(swaggerDir);
+app.use('subPath', swaggerDir);
 
-// for example
-swaggerDir('/my/swagger');
-swaggerDir('/my/swagger', { port: 5000 });
+const server = app.listen(port);
+
+const close = async () => {
+  console.log('Service is closing...');
+  await Promise.all([server.close(), swaggerDir.stop()]);
+  console.log('Service is closed!');
+};
 ```
 
 ## Options
@@ -29,11 +37,9 @@ swaggerDir('/my/swagger', { port: 5000 });
 ```js
 const options = {
   mode = 'production',
-  publicUrl = '/',
-  servicePublicUrl = '/',
-  port = 3000,
-  logLevel = LOG_INFO,
-  dateFormat = 'yyyy/MM/dd HH:mm:ss',
+  logLevel, // debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: info
+  dateFormat, // Default: yyyy/MM/dd HH:mm:ss
   swaggerUiOptions = {},
+  id, // id for log
 }
 ```

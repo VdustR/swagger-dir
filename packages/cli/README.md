@@ -23,8 +23,7 @@ Options:
   -d, --dir <dir>                              Swagger files directory
   -m, --mode <mode>                            Default: production
   -s, --swagger-ui-options <swaggerUiOptions>  a JSON format swagger UI options
-  -u, --public-url <publicUrl>                 Default: /
-  -r, --server-public-url <serverPublicUrl>    Default: /
+  -u, --public-url <publicUrl>                 Public URL for gateway. Default: /
   -p, --port <port>                            Default: 3000
   -l, --log-level <logLevel>                   debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: info
   -f, --date-format <dateFormat>               Default: yyyy/MM/dd HH:mm:ss
@@ -37,7 +36,7 @@ For example:
 # browse current directory
 swagger-dir
 # browse specific directory
-swagger-dir /path/to/my/swagger/files/folder
+swagger-dir -d /path/to/my/swagger/files/folder
 # you can also use npx to execute it without installing it
 npx swagger-dir
 ```
@@ -63,8 +62,6 @@ docker run --rm --name swagger-dir -it -v /swagger-ui/files/path:/data -p 80:300
 ```
 
 Check [chokidar#performance](https://github.com/paulmillr/chokidar#performance) for more information.
-
-If there is a gateway with subURL, use `publicUrl` for prefix of the links. If the URL is bypassed(without rewrite) at the reverse proxy, you might need `serverPublicUrl` to serve with the `/subURL/`. Take a look at the docker-compose examples of [publicUrl](../../examples/publicUrl) and [serverPublicUrl](../../examples/serverPublicUrl).
 
 ### Build Locally
 

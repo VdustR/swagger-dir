@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
-const swaggerDir = require('@swagger-dir/core');
+const { inspect } = require('util');
+const SwaggerDir = require('@swagger-dir/core');
+const express = require('express');
 const program = require('commander');
 const pkg = require('../package.json');
 
 const cwd = process.cwd();
+const app = express();
 
-const forceClose = () => process.exit(1);
+const defaultPort = 3000;
+const defaultPublicUrl = '/';
 
 program
   .version(pkg.version)
@@ -17,9 +21,8 @@ program
     '-s, --swagger-ui-options <swaggerUiOptions>',
     'a JSON format swagger UI options'
   )
-  .option('-u, --public-url <publicUrl>', 'Default: /')
-  .option('-r, --server-public-url <serverPublicUrl>', 'Default: /')
-  .option('-p, --port <port>', 'Default: 3000')
+  .option('-u, --public-url <publicUrl>', 'Public URL for gateway. Default: /')
+  .option('-p, --port <port>', `Default: ${defaultPort}`)
   .option(
     '-l, --log-level <logLevel>',
     'debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: info'
@@ -27,25 +30,48 @@ program
   .option('-f, --date-format <dateFormat>', 'Default: yyyy/MM/dd HH:mm:ss')
   .parse(process.argv);
 
-const close = swaggerDir(program.dir || cwd, {
+const swaggerDir = new SwaggerDir(program.dir || cwd, {
   ...(!program.mode ? null : { mode: program.mode }),
   ...(!program.swaggerUiOptions
     ? null
     : { swaggerUiOptions: JSON.parse(program.swaggerUiOptions) }),
   ...(!program.publicUrl ? null : { publicUrl: program.publicUrl }),
-  ...(!program.serverPublicUrl
-    ? null
-    : { serverPublicUrl: program.serverPublicUrl }),
-  ...(!program.port ? null : { port: Number(program.port) }),
   ...(!program.logLevel ? null : { logLevel: Number(program.logLevel) }),
   ...(!program.dateFormat ? null : { dateFormat: program.dateFormat }),
+  id: 'cli',
 });
+swaggerDir.start();
+app.use(program.publicUrl || defaultPublicUrl, swaggerDir.fn);
+
+const port = program.port ? Number(program.port) : defaultPort;
+const server = app.listen(port);
+console.log(`swagger dir is listen on port: ${inspect(port)}`);
+
+const close = async () => {
+  console.log('Service is closing...');
+  await Promise.all([
+    new Promise(resolve => server.close(resolve)),
+    swaggerDir.stop(),
+  ]);
+  console.log('Service is closed!');
+};
+
+const forceClose = () => process.exit(1);
 
 process.on('SIGINT', () => {
+  console.log('detect SIGINT');
   process.on('SIGINT', forceClose);
-  close().then(forceClose);
+  (async () => {
+    try {
+      await close();
+      process.exit(0);
+    } catch (e) {
+      console.error('Got error on close', e);
+      forceClose();
+    }
+  })();
   setTimeout(() => {
-    console.log('swagger-dir close timeout!');
+    console.log('close timeout');
     forceClose();
   }, 10000);
 });

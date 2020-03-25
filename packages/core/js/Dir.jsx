@@ -1,6 +1,3 @@
-import { resolve } from 'url';
-import { join } from 'path';
-import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { css } from '@emotion/core';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,12 +8,13 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FolderIcon from '@material-ui/icons/Folder';
+import { join } from 'path';
+import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
+import { resolve } from 'url';
 import Copy from './Copy';
+import IndentContext from './IndentContext';
 import Link from './Link';
 import Node from './Node';
-import IndentContext from './IndentContext';
-
-const publicUrl = process.env.PUBLIC_URL;
 
 const expandCss = css`
   transition: transform ease-in-out 0.3s;
@@ -32,11 +30,7 @@ const Dir = ({ dir, node, root = false, ...props }) => {
   const indent = useContext(IndentContext);
 
   const href = useMemo(
-    () =>
-      resolve(
-        window.location.href,
-        join(publicUrl, 'dir', baseDir, dir, node.dir)
-      ),
+    () => resolve(window.location.href, join('#/', dir, `${node.dir}/`)),
     [dir, node.dir]
   );
   return (

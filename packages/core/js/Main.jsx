@@ -1,9 +1,10 @@
-import { memo } from 'react';
 import { css } from '@emotion/core';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import teal from '@material-ui/core/colors/teal';
+import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { memo } from 'react';
+import { HashRouter } from 'react-router-dom';
 import Nav from './Nav';
 import Tree from './Tree';
 
@@ -45,16 +46,18 @@ const theme = createMuiTheme({
 });
 
 const App = () => (
-  <StylesProvider injectFirst>
-    <ThemeProvider theme={theme}>
-      <div css={outerCss}>
-        <Nav />
-        <div css={contentCss}>
-          <Tree />
+  <HashRouter>
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <div css={outerCss}>
+          <Nav />
+          <div css={contentCss}>
+            <Tree />
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
-  </StylesProvider>
+      </ThemeProvider>
+    </StylesProvider>
+  </HashRouter>
 );
 
 export default memo(App);

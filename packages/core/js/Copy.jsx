@@ -1,8 +1,8 @@
-import { memo, useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/core';
 import IconButton from '@material-ui/core/IconButton';
-import LinkIcon from '@material-ui/icons/Link';
 import Tooltip from '@material-ui/core/Tooltip';
+import LinkIcon from '@material-ui/icons/Link';
+import { memo, useCallback, useRef, useState } from 'react';
 
 const copyCss = css`
   opacity: 0;

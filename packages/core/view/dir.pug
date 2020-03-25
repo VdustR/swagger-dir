@@ -5,23 +5,18 @@ head
   link(
     rel='icon',
     type='image/png',
-    href=`${publicUrl}favicon-32x32.png`,
+    href='./swagger-ui/favicon-32x32.png',
     sizes='32x32'
   )
   link(
     rel='icon',
     type='image/png',
-    href=`${publicUrl}favicon-16x16.png`,
+    href='./swagger-ui/favicon-16x16.png',
     sizes='16x16'
   )
-  link(
-    rel='stylesheet',
-    type='text/css',
-    href=`${publicUrl}lib/victormono/dist/index.css`
-  )
+  link(rel='stylesheet', type='text/css', href='./victormono/dist/index.css')
   script.
-    const baseDir = #{baseDir};
     const files = #{files};
 body
   #root
-  script(src=`${publicUrl}js/app.js`)
+  script(src='./js/app.js')

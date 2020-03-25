@@ -5,7 +5,9 @@
     "dev:backend": "nodemon -e js,mjs,json,pug packages/core/dev.js",
     "dev:frontend": "node packages/core/dev.js",
     "commit": "git-cz",
-    "pub": "lerna publish --conventional-commits"
+    "pub": "yarn build && lerna publish --conventional-commits",
+    "build": "yarn build:core",
+    "build:core": "cd packages/core && yarn build"
   },
   "dependencies": {
     "lerna": "^3.19.0"
@@ -18,7 +20,6 @@
     "commitizen": "^4.0.3",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
-    "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "typescript": "^3.7.3",
     "webpack": "^4.42.0"
@@ -43,11 +44,5 @@
       "git add"
     ],
     "*.{js,jsx}": "eslint"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "packages/core/.cache",
-      "packages/core/js"
-    ]
   }
 }

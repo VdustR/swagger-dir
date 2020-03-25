@@ -1,4 +1,7 @@
-/jsDist
+/js
+/build.js
+/webpackConfig.js
+/WebpackDev.js
 
 .vscode/*
 !.vscode/settings.json

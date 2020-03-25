@@ -8,7 +8,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
   },
   globals: {
-    baseDir: 'readonly',
     files: 'readonly',
   },
 };
