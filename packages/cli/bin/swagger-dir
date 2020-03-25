@@ -36,8 +36,8 @@ const close = swaggerDir(program.dir || cwd, {
   ...(!program.serverPublicUrl
     ? null
     : { serverPublicUrl: program.serverPublicUrl }),
-  ...(!program.port ? null : { port: program.port }),
-  ...(!program.logLevel ? null : { logLevel: program.logLevel }),
+  ...(!program.port ? null : { port: Number(program.port) }),
+  ...(!program.logLevel ? null : { logLevel: Number(program.logLevel) }),
   ...(!program.dateFormat ? null : { dateFormat: program.dateFormat }),
 });
 

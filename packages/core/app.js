@@ -217,7 +217,7 @@ const swaggerDir = (
 
   if (logLevel <= LOG_DEBUG) {
     // access log
-    app.use(join(publicUrl, '*'), function(req, res, next) {
+    app.use('*', function(req, res, next) {
       logInfo(`got requested: ${req.method} ${req.originalUrl}`);
       next();
     });
@@ -290,7 +290,9 @@ const swaggerDir = (
     );
   });
 
-  app.get('/*', (req, res) => res.status(404).send('Not Found'));
+  app.use('*', (req, res) =>
+    res.status(404).send(`Not Found: ${req.method} ${req.originalUrl}`)
+  );
 
   let server = null;
   let closing = false;
