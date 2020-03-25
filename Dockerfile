@@ -5,7 +5,7 @@ COPY packages/cli/package.json packages/cli/package.json
 COPY packages/core/package.json packages/core/package.json
 COPY yarn.lock yarn.lock
 COPY lerna.json lerna.json
-RUN yarn --prod
+RUN yarn --prod --network-timeout 100000
 COPY . .
 ENV PATH="/swagger-dir/packages/cli/bin:${PATH}"
 WORKDIR /data
