@@ -42,7 +42,7 @@ Or you can check how the [Swagger DIR CLI](https://github.com/VdustR/swagger-dir
 const options = {
   mode = 'production',
   logLevel, // debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: info
-  dateFormat, // Default: yyyy/MM/dd HH:mm:ss
+  formatDate, // Default: date => date.toISOString()
   swaggerUiOptions = {},
   id, // id for log
 }

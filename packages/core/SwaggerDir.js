@@ -13,14 +13,14 @@ class SwaggerDir {
     {
       mode = 'production',
       logLevel,
-      dateFormat,
+      formatDate,
       swaggerUiOptions = {},
       id,
     } = {}
   ) {
     this.dir = resolve(process.cwd(), dir);
     this.mode = mode;
-    this.logger = new Logger({ logLevel, dateFormat, id });
+    this.logger = new Logger({ logLevel, formatDate, id });
     this.fileWatcher = new FileWatcher(dir, this.logger);
     const renderSwaggerUi = pug.compileFile(
       resolve(__dirname, 'view/swagger-ui.pug')

@@ -33,7 +33,6 @@ program
     '-l, --log-level <logLevel>',
     `debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: ${defaultLogLevel}`
   )
-  .option('-f, --date-format <dateFormat>', 'Default: yyyy/MM/dd HH:mm:ss')
   .parse(process.argv);
 
 const logLevel = !program.logLevel ? defaultLogLevel : Number(program.logLevel);
