@@ -46,7 +46,7 @@ npx swagger-dir
 Pull the image:
 
 ```sh
-docker pull vdustr/swagger-dir
+docker pull vdustr/swagger-dir:latest
 ```
 
 Run the container:

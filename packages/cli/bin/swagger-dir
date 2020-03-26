@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
+const { join } = require('path');
 const { inspect } = require('util');
 const SwaggerDir = require('@swagger-dir/core');
+const Logger = require('@swagger-dir/core/Logger');
 const express = require('express');
 const program = require('commander');
 const pkg = require('../package.json');
@@ -11,6 +13,7 @@ const app = express();
 
 const defaultPort = 3000;
 const defaultPublicUrl = '/';
+const defaultLogLevel = Logger.LOG_INFO;
 
 program
   .version(pkg.version)
@@ -21,14 +24,19 @@ program
     '-s, --swagger-ui-options <swaggerUiOptions>',
     'a JSON format swagger UI options'
   )
-  .option('-u, --public-url <publicUrl>', 'Public URL for gateway. Default: /')
+  .option(
+    '-u, --public-url <publicUrl>',
+    `Public URL for gateway. Default: ${defaultPublicUrl}`
+  )
   .option('-p, --port <port>', `Default: ${defaultPort}`)
   .option(
     '-l, --log-level <logLevel>',
-    'debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: info'
+    `debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: ${defaultLogLevel}`
   )
   .option('-f, --date-format <dateFormat>', 'Default: yyyy/MM/dd HH:mm:ss')
   .parse(process.argv);
+
+const logLevel = !program.logLevel ? defaultLogLevel : Number(program.logLevel);
 
 const swaggerDir = new SwaggerDir(program.dir || cwd, {
   ...(!program.mode ? null : { mode: program.mode }),
@@ -36,12 +44,34 @@ const swaggerDir = new SwaggerDir(program.dir || cwd, {
     ? null
     : { swaggerUiOptions: JSON.parse(program.swaggerUiOptions) }),
   ...(!program.publicUrl ? null : { publicUrl: program.publicUrl }),
-  ...(!program.logLevel ? null : { logLevel: Number(program.logLevel) }),
+  logLevel,
   ...(!program.dateFormat ? null : { dateFormat: program.dateFormat }),
   id: 'cli',
 });
 swaggerDir.start();
-app.use(program.publicUrl || defaultPublicUrl, swaggerDir.fn);
+
+// add leading trailing slashes
+const publicUrl = (program.publicUrl || defaultPublicUrl)
+  .replace(/^\/?/, '/')
+  .replace(/\/?$/, '/');
+
+app.use((req, res, next) => {
+  swaggerDir.logger.logDebug(`[cli] access: ${req.method} ${req.path}`);
+  next();
+});
+
+if (publicUrl !== defaultPublicUrl) {
+  // redirect `/` to `/publicUrl/`
+  app.get('/', (req, res) => res.redirect(`.${publicUrl}`));
+  // redirect `/publicUrl` to `/publicUrl/`
+  app.get(publicUrl, (req, res, next) => {
+    if (req.path === publicUrl.substring(0, publicUrl.length - 1))
+      res.redirect(`.${publicUrl}`);
+    else next();
+  });
+}
+
+app.use(publicUrl, swaggerDir.fn);
 
 const port = program.port ? Number(program.port) : defaultPort;
 const server = app.listen(port);

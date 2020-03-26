@@ -58,15 +58,16 @@ class SwaggerDir {
   }
   fn = (req, res, next) => {
     this.logger.logDebug(`access: ${req.method} ${req.path}`);
-    if (req.path === '/swagger-ui') {
+    const reqPath = req.path;
+    if (reqPath === '/swagger-ui') {
       res.redirect('./swagger-ui/');
       return;
     }
-    if (req.path === '/swagger-ui/') {
+    if (reqPath === '/swagger-ui/') {
       res.send(this.swaggerUi);
       return;
     }
-    if (req.path === '/') {
+    if (reqPath === '/') {
       res.send(
         this.renderDirUi({
           files: inspect(this.fileWatcher.files, {

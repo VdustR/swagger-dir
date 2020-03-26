@@ -16,4 +16,4 @@ services:
       - 3000:3000
     volumes:
       - ../../data/:/data:ro
-    command: -u /swagger-dir/ -l 0
+    command: -l 0
