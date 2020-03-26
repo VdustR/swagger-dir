@@ -40,7 +40,6 @@ const Tree = () => {
         }
         let subTree = pointer.children.find(child => child.dir === dir);
         if (!subTree) {
-          console.log('dir', dir);
           subTree = {
             dir,
             children: [],

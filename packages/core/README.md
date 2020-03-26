@@ -22,8 +22,8 @@ const SwaggerDir = require('@swagger-dir/core');
 const swaggerDir = new SwaggerDir(dir, options);
 swaggerDir.start();
 
-app.use(swaggerDir);
-app.use('subPath', swaggerDir);
+app.use(swaggerDir.fn);
+app.use('subPath', swaggerDir.fn);
 
 const server = app.listen(port);
 
