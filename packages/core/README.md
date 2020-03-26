@@ -2,6 +2,8 @@
 
 > A Swagger.io Directory Browser
 
+Please read the documentation on the official site: <https://github.com/VdustR/swagger-dir/tree/master/packages/core>
+
 [More info](../../README.md)
 
 ## Install
