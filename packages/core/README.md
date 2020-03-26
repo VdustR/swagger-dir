@@ -34,6 +34,8 @@ const close = async () => {
 };
 ```
 
+Or you can check how the [Swagger DIR CLI](https://github.com/VdustR/swagger-dir/blob/master/packages/cli/bin/swagger-dir) works for reference.
+
 ## Options
 
 ```js
