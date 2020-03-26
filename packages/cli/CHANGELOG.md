@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/VdustR/swagger-dir/compare/v1.0.0...v1.0.1) (2020-03-26)
+
+### Bug Fixes
+
+- drop date-fns ([be15fbf](https://github.com/VdustR/swagger-dir/commit/be15fbf39d6f0a52ed116a75fdd256b76cb79ddd))
+- **cli:** redirect for public url ([a8084ba](https://github.com/VdustR/swagger-dir/commit/a8084baed1f0f4c07fcc4ab8a61f881c098da40c))
+
 # [1.0.0](https://github.com/VdustR/swagger-dir/compare/v0.2.2...v1.0.0) (2020-03-25)
 
 ### Code Refactoring
