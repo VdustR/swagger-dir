@@ -5,9 +5,7 @@
     "dev:backend": "nodemon -e js,mjs,json,pug packages/core/dev.js",
     "dev:frontend": "node packages/core/dev.js",
     "commit": "git-cz",
-    "pub": "yarn build && lerna publish --conventional-commits",
-    "build": "yarn build:core",
-    "build:core": "cd packages/core && yarn build"
+    "pub": "lerna publish --conventional-commits"
   },
   "dependencies": {
     "lerna": "^3.19.0"
