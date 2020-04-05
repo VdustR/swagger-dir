@@ -26,7 +26,7 @@ const openCss = css`
 `;
 
 const Dir = ({ dir, node, root = false, ...props }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleClick = useCallback(() => setOpen((open) => !open), []);
   const indent = useContext(IndentContext);
 
