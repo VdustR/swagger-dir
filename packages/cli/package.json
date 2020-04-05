@@ -26,7 +26,7 @@
     "url": "https://github.com/VdustR/swagger-dir.git"
   },
   "dependencies": {
-    "@swagger-dir/core": "^2.0.0",
+    "@swagger-dir/core": "^2.0.1",
     "commander": "^5.0.0",
     "express": "^4.17.1"
   },
