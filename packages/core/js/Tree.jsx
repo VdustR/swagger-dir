@@ -1,9 +1,9 @@
-import { css } from '@emotion/core';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import { memo, useMemo } from 'react';
-import Dir from './Dir';
-import useFiles from './useFiles';
+import { css } from "@emotion/core";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import { memo, useMemo } from "react";
+import Dir from "./Dir";
+import useFiles from "./useFiles";
 
 const treeCss = css`
   max-width: 800px;
@@ -12,7 +12,7 @@ const treeCss = css`
   box-sizing: content-box;
 `;
 
-const getName = v => (typeof v === 'string' ? v : v.dir);
+const getName = (v) => (typeof v === "string" ? v : v.dir);
 
 const sort = (a, b) => {
   const aName = getName(a);
@@ -25,12 +25,12 @@ const Tree = () => {
 
   const tree = useMemo(() => {
     const tree = {
-      dir: '',
+      dir: "",
       children: [],
     };
 
-    files.forEach(file => {
-      const route = file.split('/');
+    files.forEach((file) => {
+      const route = file.split("/");
       let pointer = tree;
       route.forEach((dir, index) => {
         if (index === route.length - 1) {
@@ -38,7 +38,7 @@ const Tree = () => {
           pointer.children = [...pointer.children, dir].sort(sort);
           return;
         }
-        let subTree = pointer.children.find(child => child.dir === dir);
+        let subTree = pointer.children.find((child) => child.dir === dir);
         if (!subTree) {
           subTree = {
             dir,

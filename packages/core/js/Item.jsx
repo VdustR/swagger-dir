@@ -1,18 +1,18 @@
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import { join } from 'path';
-import { memo, useMemo } from 'react';
-import { resolve } from 'url';
-import Copy from './Copy';
-import Link from './Link';
+import ListItem from "@material-ui/core/ListItem";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import { join } from "path";
+import { memo, useMemo } from "react";
+import { resolve } from "url";
+import Copy from "./Copy";
+import Link from "./Link";
 
-const Item = ({ dir = '', file, ...props }) => {
+const Item = ({ dir = "", file, ...props }) => {
   const href = useMemo(
     () =>
       resolve(
         window.location.href,
-        `./swagger-ui/?url=${encodeURIComponent(join('../data', dir, file))}`
+        `./swagger-ui/?url=${encodeURIComponent(join("../data", dir, file))}`
       ),
     [dir, file]
   );

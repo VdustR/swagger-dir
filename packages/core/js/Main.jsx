@@ -1,12 +1,12 @@
-import { css } from '@emotion/core';
-import deepOrange from '@material-ui/core/colors/deepOrange';
-import teal from '@material-ui/core/colors/teal';
-import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import { memo } from 'react';
-import { HashRouter } from 'react-router-dom';
-import Nav from './Nav';
-import Tree from './Tree';
+import { css } from "@emotion/core";
+import deepOrange from "@material-ui/core/colors/deepOrange";
+import teal from "@material-ui/core/colors/teal";
+import { StylesProvider, ThemeProvider } from "@material-ui/core/styles";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import { memo } from "react";
+import { HashRouter } from "react-router-dom";
+import Nav from "./Nav";
+import Tree from "./Tree";
 
 const outerCss = css`
   position: absolute;
@@ -30,18 +30,18 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
-      'Victor Mono',
-      '-apple-system',
-      'BlinkMacSystemFont',
+      "Victor Mono",
+      "-apple-system",
+      "BlinkMacSystemFont",
       '"Segoe UI"',
-      'Roboto',
+      "Roboto",
       '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
+      "Arial",
+      "sans-serif",
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
+    ].join(","),
   },
 });
 

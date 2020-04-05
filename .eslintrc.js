@@ -3,11 +3,11 @@ module.exports = {
     node: true,
     browser: true,
   },
-  extends: ['react-app'],
+  extends: ["react-app"],
   rules: {
-    'react/react-in-jsx-scope': 'off',
+    "react/react-in-jsx-scope": "off",
   },
   globals: {
-    files: 'readonly',
+    files: "readonly",
   },
 };

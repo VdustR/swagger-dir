@@ -1,4 +1,4 @@
-const defaultFormatDate = date => date.toISOString();
+const defaultFormatDate = (date) => date.toISOString();
 
 class Logger {
   static LOG_DEBUG = 0;
@@ -20,19 +20,19 @@ class Logger {
   }
   logDebug(...args) {
     if (this.level > Logger.LOG_DEBUG) return;
-    console.log(this.date, `[${this.id}]`, '[debug]', ...args);
+    console.log(this.date, `[${this.id}]`, "[debug]", ...args);
   }
   logInfo(...args) {
     if (this.level > Logger.LOG_INFO) return;
-    console.log(this.date, `[${this.id}]`, '[info]', ...args);
+    console.log(this.date, `[${this.id}]`, "[info]", ...args);
   }
   logWarn(...args) {
     if (this.level > Logger.LOG_WARN) return;
-    console.warn(this.date, `[${this.id}]`, '[warn]', ...args);
+    console.warn(this.date, `[${this.id}]`, "[warn]", ...args);
   }
   logError(...args) {
     if (this.level > Logger.LOG_ERROR) return;
-    console.error(this.date, `[${this.id}]`, '[error]', ...args);
+    console.error(this.date, `[${this.id}]`, "[error]", ...args);
   }
 }
 

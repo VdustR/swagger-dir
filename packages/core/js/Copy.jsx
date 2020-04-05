@@ -1,8 +1,8 @@
-import { css } from '@emotion/core';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import LinkIcon from '@material-ui/icons/Link';
-import { memo, useCallback, useRef, useState } from 'react';
+import { css } from "@emotion/core";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import LinkIcon from "@material-ui/icons/Link";
+import { memo, useCallback, useRef, useState } from "react";
 
 const copyCss = css`
   opacity: 0;
@@ -15,7 +15,7 @@ const Copy = ({ href, ...props }) => {
   const [success, setSuccess] = useState(false);
   const copyUrl = useCallback(() => {
     copyRef.current.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     setSuccess(true);
   }, []);
   const blurHandler = () => setSuccess(false);

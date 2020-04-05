@@ -1,5 +1,6 @@
-const { dirname, join } = require('path');
+const { dirname, join } = require("path");
 
-const getModuleDir = lib => dirname(require.resolve(join(lib, 'package.json')));
+const getModuleDir = (lib) =>
+  dirname(require.resolve(join(lib, "package.json")));
 
 module.exports = getModuleDir;
