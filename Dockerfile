@@ -7,6 +7,8 @@ COPY yarn.lock yarn.lock
 COPY lerna.json lerna.json
 RUN yarn --network-timeout 100000
 COPY . .
+# build js
+WORKDIR /swagger-dir/packages/core
 RUN yarn build
 
 FROM node:13.10.1-alpine
