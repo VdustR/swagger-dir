@@ -1,25 +1,22 @@
-const { resolve } = require('path');
+const { resolve } = require("path");
 
-const jsSrcDir = resolve(__dirname, 'js');
-const jsDir = resolve(__dirname, 'jsDist');
+const jsSrcDir = resolve(__dirname, "js");
+const jsDir = resolve(__dirname, "jsDist");
 
-const webpackConfig = ({ mode = 'production' } = {}) => ({
+const webpackConfig = ({ mode = "production" } = {}) => ({
   mode,
-  bail: mode === 'production',
-  devtool: mode === 'production' ? 'source-map' : 'cheap-module-source-map',
-  entry: resolve(jsSrcDir, 'app.js'),
+  bail: mode === "production",
+  devtool: mode === "production" ? "source-map" : "cheap-module-source-map",
+  entry: resolve(jsSrcDir, "app.js"),
   output: {
     path: jsDir,
-    filename: 'app.js',
-    library: 'swagger-dir',
-    libraryTarget: 'umd',
-    publicPath: './',
-  },
-  externals: {
-    baseDir: 'baseDir',
+    filename: "app.js",
+    library: "swagger-dir",
+    libraryTarget: "umd",
+    publicPath: "./",
   },
   resolve: {
-    extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx'],
+    extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"],
   },
   module: {
     rules: [
@@ -27,14 +24,14 @@ const webpackConfig = ({ mode = 'production' } = {}) => ({
         test: /\.jsx?$/,
         include: [jsSrcDir],
         use: {
-          loader: require.resolve('babel-loader'),
+          loader: require.resolve("babel-loader"),
           options: {
             presets: [
               [
-                require.resolve('@emotion/babel-preset-css-prop'),
+                require.resolve("@emotion/babel-preset-css-prop"),
                 {
                   autoLabel: true,
-                  labelFormat: '[local]',
+                  labelFormat: "[local]",
                 },
               ],
             ],

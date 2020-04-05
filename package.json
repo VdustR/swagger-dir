@@ -16,13 +16,14 @@
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@emotion/babel-preset-css-prop": "^10.0.27",
-    "@prettier/plugin-pug": "^1.1.9",
+    "@prettier/plugin-pug": "^1.2.0",
     "commitizen": "^4.0.3",
-    "husky": "^3.1.0",
-    "lint-staged": "^9.5.0",
-    "prettier": "^1.19.1",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.2",
+    "prettier": "^2.0.2",
+    "pretty-quick": "^2.0.1",
     "typescript": "^3.7.3",
-    "webpack": "^4.42.0"
+    "webpack": "^4.42.1"
   },
   "workspaces": [
     "packages/*"
@@ -34,15 +35,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "pretty-quick --staged && lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,html,htm,vue,css,less,scss,md,mdx,yaml,yml,pug}": [
-      "prettier --write",
-      "git add"
-    ],
     "*.{js,jsx}": "eslint"
   }
 }
