@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/VdustR/swagger-dir/compare/v1.0.1...v2.0.0) (2020-04-05)
+
+
+### Bug Fixes
+
+* **ui:** collapse dir as default ([d2f9a36](https://github.com/VdustR/swagger-dir/commit/d2f9a367932ba0971752e7c0c9e07e3ba1f73bf7))
+
+
+### Code Refactoring
+
+* **file-collector:** replace chokidar with walkdir ([28f77b8](https://github.com/VdustR/swagger-dir/commit/28f77b86e1e491cd1f5745bcfa80d2890e68f4e9))
+
+
+### Features
+
+* **ui:** info ([e7d5d63](https://github.com/VdustR/swagger-dir/commit/e7d5d63cf7987f59544d11feaf3370732a3f39dd)), closes [#2](https://github.com/VdustR/swagger-dir/issues/2)
+
+
+### BREAKING CHANGES
+
+* **file-collector:** environment variable for chokidar are redundant
+
+
+
+
+
 ## [1.0.1](https://github.com/VdustR/swagger-dir/compare/v1.0.0...v1.0.1) (2020-03-26)
 
 ### Bug Fixes
