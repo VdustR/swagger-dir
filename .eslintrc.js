@@ -9,5 +9,6 @@ module.exports = {
   },
   globals: {
     files: "readonly",
+    corePkg: "readonly",
   },
 };

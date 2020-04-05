@@ -8,12 +8,13 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FolderIcon from "@material-ui/icons/Folder";
+import ForwardIcon from "@material-ui/icons/Forward";
 import { join } from "path";
 import React, { memo, useCallback, useContext, useMemo, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { resolve } from "url";
 import Copy from "./Copy";
 import IndentContext from "./IndentContext";
-import Link from "./Link";
 import Node from "./Node";
 
 const expandCss = css`
@@ -33,6 +34,8 @@ const Dir = ({ dir, node, root = false, ...props }) => {
     () => resolve(window.location.href, join("#/", dir, `${node.dir}/`)),
     [dir, node.dir]
   );
+
+  const to = useMemo(() => join(dir, `${node.dir}/`), [dir, node.dir]);
   return (
     <>
       {root ? null : (
@@ -43,7 +46,9 @@ const Dir = ({ dir, node, root = false, ...props }) => {
           <ListItemText primary={node.dir} />
           <ListItemSecondaryAction>
             <Copy href={href} />
-            <Link href={href} />
+            <IconButton component={NavLink} to={to}>
+              <ForwardIcon />
+            </IconButton>
             <IconButton onClick={handleClick}>
               <ExpandMoreIcon css={[expandCss, open && openCss]} />
             </IconButton>

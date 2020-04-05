@@ -1,11 +1,8 @@
 import { css } from "@emotion/core";
-import deepOrange from "@material-ui/core/colors/deepOrange";
-import teal from "@material-ui/core/colors/teal";
-import { StylesProvider, ThemeProvider } from "@material-ui/core/styles";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { memo } from "react";
 import { HashRouter } from "react-router-dom";
 import Nav from "./Nav";
+import Theme from "./Theme";
 import Tree from "./Tree";
 
 const outerCss = css`
@@ -23,40 +20,16 @@ const contentCss = css`
   overflow: auto;
 `;
 
-const theme = createMuiTheme({
-  palette: {
-    primary: teal,
-    secondary: deepOrange,
-  },
-  typography: {
-    fontFamily: [
-      "Victor Mono",
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-  },
-});
-
 const App = () => (
   <HashRouter>
-    <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <div css={outerCss}>
-          <Nav />
-          <div css={contentCss}>
-            <Tree />
-          </div>
+    <Theme>
+      <div css={outerCss}>
+        <Nav />
+        <div css={contentCss}>
+          <Tree />
         </div>
-      </ThemeProvider>
-    </StylesProvider>
+      </div>
+    </Theme>
   </HashRouter>
 );
 

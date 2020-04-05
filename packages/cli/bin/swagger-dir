@@ -1,36 +1,36 @@
 #!/usr/bin/env node
 
-const { join } = require('path');
-const { inspect } = require('util');
-const SwaggerDir = require('@swagger-dir/core');
-const Logger = require('@swagger-dir/core/Logger');
-const express = require('express');
-const program = require('commander');
-const pkg = require('../package.json');
+const { join } = require("path");
+const { inspect } = require("util");
+const SwaggerDir = require("@swagger-dir/core");
+const Logger = require("@swagger-dir/core/Logger");
+const express = require("express");
+const program = require("commander");
+const pkg = require("../package.json");
 
 const cwd = process.cwd();
 const app = express();
 
 const defaultPort = 3000;
-const defaultPublicUrl = '/';
+const defaultPublicUrl = "/";
 const defaultLogLevel = Logger.LOG_INFO;
 
 program
   .version(pkg.version)
   .description(pkg.description)
-  .option('-d, --dir <dir>', 'Swagger files directory')
-  .option('-m, --mode <mode>', 'Default: production')
+  .option("-d, --dir <dir>", "Swagger files directory")
+  .option("-m, --mode <mode>", "Default: production")
   .option(
-    '-s, --swagger-ui-options <swaggerUiOptions>',
-    'a JSON format swagger UI options'
+    "-s, --swagger-ui-options <swaggerUiOptions>",
+    "a JSON format swagger UI options"
   )
   .option(
-    '-u, --public-url <publicUrl>',
+    "-u, --public-url <publicUrl>",
     `Public URL for gateway. Default: ${defaultPublicUrl}`
   )
-  .option('-p, --port <port>', `Default: ${defaultPort}`)
+  .option("-p, --port <port>", `Default: ${defaultPort}`)
   .option(
-    '-l, --log-level <logLevel>',
+    "-l, --log-level <logLevel>",
     `debug: 0, info: 1, warn: 2, error: 3, none: 4. Default: ${defaultLogLevel}`
   )
   .parse(process.argv);
@@ -44,15 +44,14 @@ const swaggerDir = new SwaggerDir(program.dir || cwd, {
     : { swaggerUiOptions: JSON.parse(program.swaggerUiOptions) }),
   ...(!program.publicUrl ? null : { publicUrl: program.publicUrl }),
   logLevel,
-  ...(!program.dateFormat ? null : { dateFormat: program.dateFormat }),
-  id: 'cli',
+  id: "cli",
 });
 swaggerDir.start();
 
 // add leading trailing slashes
 const publicUrl = (program.publicUrl || defaultPublicUrl)
-  .replace(/^\/?/, '/')
-  .replace(/\/?$/, '/');
+  .replace(/^\/?/, "/")
+  .replace(/\/?$/, "/");
 
 app.use((req, res, next) => {
   swaggerDir.logger.logDebug(`[cli] access: ${req.method} ${req.path}`);
@@ -61,7 +60,7 @@ app.use((req, res, next) => {
 
 if (publicUrl !== defaultPublicUrl) {
   // redirect `/` to `/publicUrl/`
-  app.get('/', (req, res) => res.redirect(`.${publicUrl}`));
+  app.get("/", (req, res) => res.redirect(`.${publicUrl}`));
   // redirect `/publicUrl` to `/publicUrl/`
   app.get(publicUrl, (req, res, next) => {
     if (req.path === publicUrl.substring(0, publicUrl.length - 1))
@@ -77,30 +76,30 @@ const server = app.listen(port);
 console.log(`swagger dir is listen on port: ${inspect(port)}`);
 
 const close = async () => {
-  console.log('Service is closing...');
+  console.log("Service is closing...");
   await Promise.all([
-    new Promise(resolve => server.close(resolve)),
+    new Promise((resolve) => server.close(resolve)),
     swaggerDir.stop(),
   ]);
-  console.log('Service is closed!');
+  console.log("Service is closed!");
 };
 
 const forceClose = () => process.exit(1);
 
-process.on('SIGINT', () => {
-  console.log('detect SIGINT');
-  process.on('SIGINT', forceClose);
+process.on("SIGINT", () => {
+  console.log("detect SIGINT");
+  process.on("SIGINT", forceClose);
   (async () => {
     try {
       await close();
       process.exit(0);
     } catch (e) {
-      console.error('Got error on close', e);
+      console.error("Got error on close", e);
       forceClose();
     }
   })();
   setTimeout(() => {
-    console.log('close timeout');
+    console.log("close timeout");
     forceClose();
   }, 10000);
 });

@@ -2,6 +2,7 @@ const { resolve } = require("path");
 const { inspect } = require("util");
 const pathToSwaggerUi = require("swagger-ui-dist").absolutePath();
 const pug = require("pug");
+const corePkg = require("@swagger-dir/core/package.json");
 const Logger = require("./Logger");
 const serveStatic = require("./serveStatic");
 const getModuleDir = require("./getModuleDir");
@@ -73,6 +74,7 @@ class SwaggerDir {
           files: inspect(this.fileCollector.files, {
             maxArrayLength: Infinity,
           }),
+          corePkg: JSON.stringify(corePkg),
         })
       );
       return;
