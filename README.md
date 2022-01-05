@@ -1,3 +1,5 @@
+> # ⚠️ This repository has been archived. GitLab Interactive API documentation is recommended to use.
+
 # Swagger Dir
 
 > A Swagger.io Directory Browser
